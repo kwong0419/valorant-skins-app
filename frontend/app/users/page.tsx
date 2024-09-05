@@ -1,21 +1,28 @@
+'use client'
 import React from 'react'
 
-interface User {
-  id: number
-  name: string
+interface skin {
+  uuid:string
+  displayName: string
 }
 
 const UsersPage = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users', {cache: 'no-store'})
-  const users: User[] = await res.json()
+  const res = await fetch('https://valorant-api.com/v1/weapons/skins')
+  const data = await res.json()
+  const skins: skin[] = data.data
+    console.log('skins', skins)
+//   debugger
+  console.log("hello")
+  console.log("hello")
+
   return (
     <main>
       <>
         <h1>Users</h1>
         <p>{new Date().toLocaleTimeString()}</p>
         <ul>
-          {users.map((user) => (
-            <li key={user.id}>{user.name}</li>
+          {skins.map((skin) => (
+            <li key={skin.uuid}>{skin.displayName}</li>
           ))}
         </ul>
       </>
