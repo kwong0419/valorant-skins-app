@@ -1,28 +1,30 @@
 'use client'
 import React from 'react'
 
-interface skin {
-  uuid:string
+interface Skin {
+  uuid: string
   displayName: string
+  displayIcon: string
 }
 
 const UsersPage = async () => {
   const res = await fetch('https://valorant-api.com/v1/weapons/skins')
-  const data = await res.json()
-  const skins: skin[] = data.data
-    console.log('skins', skins)
-//   debugger
-  console.log("hello")
-  console.log("hello")
+  const res_json = await res.json()
+  const skins: Skin[] = res_json.data
+
+  console.log(skins)
+  // debugger
 
   return (
     <main>
       <>
-        <h1>Users</h1>
-        <p>{new Date().toLocaleTimeString()}</p>
+        <h1>Skins</h1>
         <ul>
           {skins.map((skin) => (
-            <li key={skin.uuid}>{skin.displayName}</li>
+            <>
+              <li key={skin.uuid}>{skin.displayName}</li>
+              <img src={skin.displayIcon} />
+            </>
           ))}
         </ul>
       </>
