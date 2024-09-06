@@ -1,35 +1,23 @@
-'use client'
 import React from 'react'
+import SkinCard, {SkinCardProps} from '../components/SkinCard'
 
-interface Skin {
-  uuid: string
-  displayName: string
-  displayIcon: string
-}
-
-const UsersPage = async () => {
+const SkinPage = async () => {
   const res = await fetch('https://valorant-api.com/v1/weapons/skins')
   const res_json = await res.json()
-  const skins: Skin[] = res_json.data
+  const skins = res_json.data
 
   console.log(skins)
-  // debugger
 
   return (
     <main>
       <>
         <h1>Skins</h1>
-        <ul>
-          {skins.map((skin) => (
-            <>
-              <li key={skin.uuid}>{skin.displayName}</li>
-              <img src={skin.displayIcon} />
-            </>
-          ))}
-        </ul>
+        {skins.map((skin: SkinCardProps) => (
+          <SkinCard key={skin.uuid} uuid={skin.uuid} displayName={skin.displayName} displayIcon={skin.displayIcon} />
+        ))}
       </>
     </main>
   )
 }
 
-export default UsersPage
+export default SkinPage
