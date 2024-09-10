@@ -12,9 +12,18 @@ const SkinPage = async () => {
     <main>
       <>
         <h1>Skins</h1>
-        {skins.map((skin: SkinCardProps) => (
-          <SkinCard key={skin.uuid} uuid={skin.uuid} displayName={skin.displayName} displayIcon={skin.displayIcon} />
-        ))}
+        {skins.map(
+          (skin: SkinCardProps) =>
+            !skin.displayName.includes('Standard') &&
+            !skin.displayName.includes('Random Favorite') && (
+              <SkinCard
+                key={skin.uuid}
+                uuid={skin.uuid}
+                displayName={skin.displayName}
+                displayIcon={skin.displayIcon}
+              />
+            ),
+        )}
       </>
     </main>
   )
