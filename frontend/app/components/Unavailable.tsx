@@ -2,12 +2,12 @@ import React from 'react'
 import Image from 'next/image'
 import missingIcon from '../../public/images/upsetSticker.png'
 
-const UnavailableCard = () => {
+const UnavailableImage = () => {
   return (
-    <div>
-      <Image src={missingIcon} alt="missingIcon" height={50} width={100} />
+    <div className="layout-fill object-contain">
+      <Image src={missingIcon} alt="missingIcon" height={60} width={120} />
     </div>
   )
 }
 
-export default UnavailableCard
+export default UnavailableImage
