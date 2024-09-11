@@ -4,7 +4,7 @@ import missingIcon from '../../public/images/upsetSticker.png'
 
 const UnavailableImage = () => {
   return (
-    <div className="layout-fill object-contain">
+    <div className="flex justify-center">
       <Image src={missingIcon} alt="missingIcon" height={60} width={120} />
     </div>
   )
