@@ -9,8 +9,7 @@ const SkinPage = async () => {
   return (
     <main>
       <>
-        <h1>Skins</h1>
-        <div className="flex flex-wrap gap-20">
+        <div className="flex flex-wrap gap-20 justify-center">
           {skins.map(
             (skin: SkinCardProps) =>
               !skin.displayName.includes('Standard') &&
