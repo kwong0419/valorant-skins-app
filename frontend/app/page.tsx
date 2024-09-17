@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import SkinCard from './components/SkinCard'
 import HeroImage from '../public/images/valorant_hero.gif'
-import BackgroundImage from '../public/images/valorant-background.jpg'
+// import BackgroundImage from '../public/images/valorant-background.jpg'
 // import stockImage from '../public/images/valorant-gun-stock-image.webp'
-import Navbar from './components/navbar'
+// import Navbar from './components/navbar'
 import Image from 'next/image'
 import LatestCard from './components/LatestCard'
 
@@ -12,7 +11,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center">
       {/* hero section */}
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero bg-base-200">
           <div className="hero-content flex-col md:flex-row">
             <Image
             alt='valorant hero page'
@@ -28,26 +27,26 @@ export default function Home() {
         </div>
       </div>
       {/* latest skins */}
-      <div
-  className="hero min-h-2"
-  style={{
-    backgroundColor: '#DE1138',
-  }}>
-  {/* <div className="hero-overlay"></div> */}
-  <div className="hero-content text-neutral-content text-center">
-    <div>
-      <h1 className="mb-5 text-5xl font-bold color">Lastest</h1>
-      <div className="flex">
-        {array.map((index)=>{
-              return(
-                <LatestCard key={index} index={index} />
-              )
-          })}
+    <div
+      className="hero min-h-2"
+      style={{
+        backgroundColor: '#DE1138',
+      }}>
+      {/* <div className="hero-overlay"></div> */}
+      <div className="hero-content text-neutral-content text-center">
+        <div>
+          <h1 className="mb-5 text-5xl font-bold color">Lastest</h1>
+          <div className="flex flex-wrap justify-center ">
+            {array.map((index)=>{
+                  return(
+                    <LatestCard key={index} index={index} />
+                  )
+              })}
 
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-    </main>
+  </main>
   )
 }
