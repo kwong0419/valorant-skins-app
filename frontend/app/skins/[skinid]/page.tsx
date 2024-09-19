@@ -1,23 +1,20 @@
 import React from 'react'
 import {notFound} from 'next/navigation'
 
-const SkinItem = async ({params}: {params: {skinId: string}}) => {
-  // if (parseInt(params.skinid) > 10){notFound()}
-  // if (isNaN(parseFloat(params.skinid))){notFound()}
+async function SkinItem({params}: {params: {skinId: string}}) {
+  // if (parseInt(params.skinId) > 10){notFound()}
+  // if (isNaN(parseFloat(params.skinId))){notFound()}
 
-  async function fetchSkinItemData(id: string) {
-    const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${id}`)
-    const res_json = await res.json()
-    return res_json
-  }
+  const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${params.skinId}`)
+  const res_json = await res.json()
+  const skinItemData = res_json.data
 
-  const itemData = fetchSkinItemData(params.skinId)
-  console.log('item data: ', itemData)
+  console.log(skinItemData)
 
   return (
     <div>
-      <p>Skin id page {params.skinId}</p>
-      <div></div>
+      <p>Skin Id Page</p>
+      <div>{skinItemData.displayName}</div>
     </div>
   )
 }
