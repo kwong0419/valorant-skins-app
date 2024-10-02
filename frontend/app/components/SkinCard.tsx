@@ -15,15 +15,15 @@ const SkinCard: React.FC<SkinCardProps> = ({uuid, displayName, displayIcon}) => 
 
   return (
     <div
-      className="skin-card min-w-72 min-h-40 mb-4 border-solid-2 rounded-lg bg-black text-white p-5"
+      className="skin-card w-60 h-48 m-4 rounded-lg bg-black text-white p-4"
       key={uuid}
       onClick={() => router.push(`/skins/${uuid}`)}
     >
       <div className="text-center">
-        <h1 className="text-lg mb-4 max-w-64">{displayName}</h1>
+        <h1 className="text-lg mb-2 max-w-64">{displayName}</h1>
       </div>
       {displayIcon ? (
-        <Image className="max-w-64 max-h-36" src={displayIcon} alt="" height={192} width={384} loading="lazy" />
+        <Image className="w-full h-24 object-contain" src={displayIcon} alt="" height={96} width={240} loading="lazy" />
       ) : (
         <UnavailableImage />
       )}
