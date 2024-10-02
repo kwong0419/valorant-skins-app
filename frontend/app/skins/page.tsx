@@ -14,12 +14,17 @@ const SkinPage = async () => {
             (skin: SkinCardProps) =>
               !skin.displayName.includes('Standard') &&
               !skin.displayName.includes('Random Favorite') && (
-                <SkinCard
+                <div
+                  className="w-full sm:w-1/2 md:w-1/3 transition-transform transform hover:scale-105 hover:opacity-50"
                   key={skin.uuid}
-                  uuid={skin.uuid}
-                  displayName={skin.displayName}
-                  displayIcon={skin.displayIcon}
-                />
+                >
+                  <SkinCard
+                    key={skin.uuid}
+                    uuid={skin.uuid}
+                    displayName={skin.displayName}
+                    displayIcon={skin.displayIcon}
+                  />
+                </div>
               ),
           )}
         </div>
