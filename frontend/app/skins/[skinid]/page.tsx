@@ -1,11 +1,13 @@
 'use client'
 
-import React, {useRef} from 'react'
+import React, {useRef, useEffect, useState} from 'react'
 import {notFound} from 'next/navigation'
 import Image from 'next/image'
+import UnavailableImage from '@/app/components/Unavailable'
 
-async function SkinItem({params}: {params: {skinId: string}}) {
+function SkinItem({params}: {params: {skinId: string}}) {
   const modalRef = useRef<HTMLDialogElement>(null)
+  const [skinItemData, setSkinItemData] = useState<any>(null)
 
   const openModal = () => {
     if (modalRef.current) {
@@ -13,16 +15,28 @@ async function SkinItem({params}: {params: {skinId: string}}) {
     }
   }
 
-  const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${params.skinId}`)
-  const res_json = await res.json()
-  const skinItemData = res_json.data
+  useEffect(() => {
+    const fetchSkinData = async () => {
+      const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${params.skinId}`)
+      const res_json = await res.json()
+      setSkinItemData(res_json.data)
+    }
+    fetchSkinData()
+  }, [params.skinId])
+
+  if (!skinItemData) return <div>Loading...</div>
 
   return (
     <div>
       <div className="main-body flex justify-between">
         <div className="column flex-1 m-2.5">
-          {skinItemData.displayIcon && (
+          {skinItemData.displayIcon ? (
             <Image src={skinItemData.displayIcon} alt="" height={400} width={800} loading="lazy" />
+          ) : (
+            <div className="flex justify-center items-center">
+              <h1 className="text-2xl font-bold">Image Unavailable</h1>
+              <UnavailableImage />
+            </div>
           )}
         </div>
         <div className="column flex-1 m-2.5">
