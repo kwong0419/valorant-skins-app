@@ -3,7 +3,7 @@ import SkinCard from './components/SkinCard'
 import HeroImage from '../public/images/valorant_hero.gif'
 import BackgroundImage from '../public/images/valorant-background.jpg'
 // import stockImage from '../public/images/valorant-gun-stock-image.webp'
-import Navbar from './components/navbar'
+import Navbar from './components/Navbar'
 import Image from 'next/image'
 import LatestCard from './components/LatestCard'
 
