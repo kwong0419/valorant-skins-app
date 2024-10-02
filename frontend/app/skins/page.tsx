@@ -9,15 +9,12 @@ const SkinPage = async () => {
   return (
     <main>
       <>
-        <div className="flex flex-wrap gap-20 justify-center">
+        <div className="flex flex-wrap gap-20 justify-center mt-10">
           {skins.map(
             (skin: SkinCardProps) =>
               !skin.displayName.includes('Standard') &&
               !skin.displayName.includes('Random Favorite') && (
-                <div
-                  className="w-full sm:w-1/2 md:w-1/3 transition-transform transform hover:scale-105 hover:opacity-50"
-                  key={skin.uuid}
-                >
+                <div className="hover:scale-105 hover:opacity-50" key={skin.uuid}>
                   <SkinCard
                     key={skin.uuid}
                     uuid={skin.uuid}
