@@ -8,6 +8,7 @@ import UnavailableImage from '@/app/components/Unavailable'
 function SkinItem({params}: {params: {skinId: string}}) {
   const modalRef = useRef<HTMLDialogElement>(null)
   const [skinItemData, setSkinItemData] = useState<any>(null)
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
 
   const openModal = () => {
     if (modalRef.current) {
@@ -49,7 +50,43 @@ function SkinItem({params}: {params: {skinId: string}}) {
             <dialog id="skin-modal" className="modal" ref={modalRef}>
               <div className="modal-box w-11/12 max-w-5xl">
                 <h3 className="font-bold text-lg">{skinItemData.displayName}</h3>
-                <p className="py-4">Click the button below to close</p>
+                {skinItemData.chromas.length > 0 ? (
+                  <div>
+                    <h4>Chromas:</h4>
+                    {skinItemData.chromas.map((chroma: any) => (
+                      <div key={chroma.uuid}>
+                        <h5>{chroma.displayName}</h5>
+                        <Image src={chroma.displayIcon} alt={chroma.displayName} height={250} width={500} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No chromas available.</p>
+                )}
+                {skinItemData.levels.length > 0 ? (
+                  <div>
+                    <h4>Levels:</h4>
+                    {skinItemData.levels.map((level: any) => (
+                      <button
+                        key={level.uuid}
+                        onClick={() => {
+                          setSelectedVideo(level.streamedVideo) // Set new video
+                        }}
+                      >
+                        {level.displayName.slice(-1)}
+                      </button>
+                    ))}
+                    {selectedVideo && (
+                      <video key={selectedVideo} controls>
+                        <source src={selectedVideo} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </div>
+                ) : (
+                  <p>No streamed videos available.</p>
+                )}
+
                 <div className="modal-action">
                   <form method="dialog">
                     <button className="btn">Close</button>
