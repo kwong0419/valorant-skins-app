@@ -49,14 +49,27 @@ function SkinItem({params}: {params: {skinId: string}}) {
             </button>
             <dialog id="skin-modal" className="modal" ref={modalRef}>
               <div className="modal-box w-11/12 max-w-5xl">
+                <button
+                  className="btn btn-sm btn-circle absolute right-2 top-2"
+                  onClick={() => modalRef.current?.close()}
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
                 <h3 className="font-bold text-lg">{skinItemData.displayName}</h3>
                 {skinItemData.chromas.length > 0 ? (
-                  <div>
-                    <h4>Chromas:</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <h4 className="col-span-2 font-semibold">Chromas:</h4>
                     {skinItemData.chromas.map((chroma: any) => (
-                      <div key={chroma.uuid}>
-                        <h5>{chroma.displayName}</h5>
-                        <Image src={chroma.displayIcon} alt={chroma.displayName} height={250} width={500} />
+                      <div key={chroma.uuid} className="flex flex-col items-center">
+                        <h5 className="text-center">{chroma.displayName}</h5>
+                        <Image
+                          src={chroma.displayIcon}
+                          alt={chroma.displayName}
+                          height={250}
+                          width={500}
+                          className="rounded-lg shadow-md"
+                        />
                       </div>
                     ))}
                   </div>
@@ -69,11 +82,12 @@ function SkinItem({params}: {params: {skinId: string}}) {
                     {skinItemData.levels.map((level: any) => (
                       <button
                         key={level.uuid}
+                        className="btn btn-primary m-1" // DaisyUI button classes
                         onClick={() => {
                           setSelectedVideo(level.streamedVideo) // Set new video
                         }}
                       >
-                        {level.displayName.slice(-1)}
+                        {level.displayName.charAt(level.displayName.length - 1)}
                       </button>
                     ))}
                     {selectedVideo && (
