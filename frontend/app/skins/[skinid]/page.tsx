@@ -48,8 +48,8 @@ function SkinItem({params}: {params: {skinId: string}}) {
         </div>
       </div>
 
-      <dialog id="skin-modal" className="modal" ref={modalRef}>
-        <div className="modal-box w-11/12 max-w-5xl relative">
+      <dialog id="skin-modal" className="modal" ref={modalRef} onClick={() => modalRef.current?.close()}>
+        <div className="modal-box w-11/12 max-w-5xl relative" onClick={(e) => e.stopPropagation()}>
           <button
             className="btn btn-sm btn-circle absolute right-2 top-2"
             onClick={() => modalRef.current?.close()}
@@ -59,11 +59,14 @@ function SkinItem({params}: {params: {skinId: string}}) {
           </button>
           <h3 className="font-bold text-lg text-center">{skinItemData.displayName}</h3>
           {skinItemData.chromas.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div
+              className={`grid ${
+                skinItemData.chromas.length === 1 ? 'flex justify-center' : 'grid-cols-2'
+              }  gap-4 mt-4`}
+            >
               <h4 className="col-span-2 font-semibold text-center">Chromas:</h4>
               {skinItemData.chromas.map((chroma: any) => (
                 <div key={chroma.uuid} className="flex flex-col items-center">
-                  <h5 className="text-center">{chroma.displayName}</h5>
                   <Image src={chroma.displayIcon} alt={chroma.displayName} height={250} width={500} />
                 </div>
               ))}
