@@ -21,16 +21,12 @@ function SkinItem({params}: {params: {skinId: string}}) {
     const fetchSkinData = async () => {
       const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${params.skinId}`)
       const res_json = await res.json()
-      if (res_json.data) {
-        setSkinItemData(res_json.data)
-      }
+      setSkinItemData(res_json.data)
     }
     fetchSkinData()
   }, [params.skinId])
 
   if (!skinItemData) return <div>Loading...</div>
-
-  console.log('Display Icon:', skinItemData.displayIcon)
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
