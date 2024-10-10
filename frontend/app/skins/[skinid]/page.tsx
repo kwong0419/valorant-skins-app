@@ -32,14 +32,21 @@ function SkinItem({params}: {params: {skinId: string}}) {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center m-2.5">
         {skinItemData.displayIcon ? (
-          <Image src={skinItemData.displayIcon} alt="" height={400} width={800} loading="lazy" />
+          <img
+            className="w-full h-24 object-contain"
+            alt=""
+            src={skinItemData.displayIcon}
+            height={400}
+            width={400}
+            loading="lazy"
+          />
         ) : (
           <div className="flex justify-center items-center">
             <h1 className="text-2xl font-bold">Image Unavailable</h1>
             <UnavailableImage />
           </div>
         )}
-        <h2 className="card-title text-center mt-4">{skinItemData.displayName}</h2>
+        <h2 className="card-title text-center mt-40">{skinItemData.displayName}</h2>
         <p className="text-center">Price goes here</p>
         <div className="card-actions justify-center mt-4">
           <button className="btn btn-primary" onClick={openModal}>
@@ -67,7 +74,14 @@ function SkinItem({params}: {params: {skinId: string}}) {
               <h4 className="col-span-2 font-semibold text-center">Chromas:</h4>
               {skinItemData.chromas.map((chroma: any) => (
                 <div key={chroma.uuid} className="flex flex-col items-center">
-                  <Image src={chroma.displayIcon} alt={chroma.displayName} height={250} width={500} />
+                  <img
+                    className="w-full h-24 object-contain"
+                    src={chroma.displayIcon}
+                    alt=""
+                    height={200}
+                    width={200}
+                    loading="lazy"
+                  />
                 </div>
               ))}
             </div>
@@ -107,7 +121,7 @@ function SkinItem({params}: {params: {skinId: string}}) {
           ) : (
             <p>No streamed videos available.</p>
           )}
-          <div className="modal-action">
+          <div className="modal-action flex justify-center">
             <form method="dialog">
               <button className="btn">Close</button>
             </form>
