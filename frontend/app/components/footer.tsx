@@ -15,7 +15,7 @@ function Footer() {
           </div>
 
           <div className="mt-4 text-center text-sm sm:mt-0 sm:text-right">
-            <p>Copyright &copy; {currentYear} Developer: Kevin Wong</p>
+            <p>Copyright &copy; {currentYear} KW & DM Inc.</p>
             <p className="mt-1">
               <span className="font-semibold text-teal-400">Valorant Skins App™</span> v{appVersion} (Alpha)
             </p>
