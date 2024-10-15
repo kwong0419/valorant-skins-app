@@ -57,7 +57,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href={'/'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Link href={'/bundles'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   Bundles
                 </Link>
               </li>
