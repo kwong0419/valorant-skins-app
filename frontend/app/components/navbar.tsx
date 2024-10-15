@@ -1,9 +1,31 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useState, useRef, useEffect} from 'react' // Import useEffect
 import Link from 'next/link'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const searchInputRef = useRef<HTMLInputElement>(null) // Create a ref for the input
+
+  const handleSearchButtonClick = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
+
+  // Focus the input when it opens
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus() // Focus the input when opened
+    }
+  }, [isSearchOpen]) // Dependency on isSearchOpen
+
+  const clearSearch = () => {
+    setSearchTerm('') // Clear the search term
+    if (searchInputRef.current) {
+      searchInputRef.current.focus() // Refocus the input after clearing
+    }
+  }
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -27,16 +49,16 @@ const Navbar = () => {
           {isMenuOpen && (
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-customRed rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
                 <Link href={'/skins'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                  Search Skins
+                  Skins
                 </Link>
               </li>
               <li>
-                <Link href={'/'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                  News
+                <Link href={'/bundles'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  Bundles
                 </Link>
               </li>
             </ul>
@@ -49,7 +71,8 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle">
+        {/* Search Button */}
+        <button className="btn btn-ghost btn-circle" onClick={handleSearchButtonClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -65,25 +88,43 @@ const Navbar = () => {
             />
           </svg>
         </button>
-        <button className="btn btn-ghost btn-circle">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+        {isSearchOpen && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              // Redirect to the skin page with the search term
+              window.location.href = `/skins?search=${searchTerm}`
+            }}
+          >
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search skins..."
+                className="input input-bordered ml-2 pr-10" // Add padding for the clear button
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                ref={searchInputRef} // Attach the ref to the input
               />
-            </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
-        </button>
+              {searchTerm && ( // Show clear button only if there is text
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 flex items-center pr-2"
+                  onClick={clearSearch}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </form>
+        )}
       </div>
     </div>
   )
