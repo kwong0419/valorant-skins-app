@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         customRed: 'rgb(222, 17, 56)',
+        customDarkerRed: 'rgb(186,58,70)',
       },
     },
   },

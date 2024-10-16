@@ -1,6 +1,7 @@
 'use client'
 import React, {useState, useRef, useEffect} from 'react' // Import useEffect
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -52,12 +53,20 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-customRed rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link href={'/skins'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Link
+                  href={'/skins'}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="hover:bg-white hover:text-customRed" // Add hover effect
+                >
                   Skins
                 </Link>
               </li>
               <li>
-                <Link href={'/bundles'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Link
+                  href={'/bundles'}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="hover:bg-white hover:text-customRed" // Add hover effect
+                >
                   Bundles
                 </Link>
               </li>
@@ -66,7 +75,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link href={'/'} className="btn btn-ghost text-xl">
+        <Link href={'/'} className="btn btn-ghost text-2xl">
+          <Image
+            src="https://static.vecteezy.com/system/resources/previews/022/636/388/non_2x/valorant-logo-valorant-icon-transparent-free-png.png"
+            alt="Valorant Logo"
+            width={50}
+            height={50}
+          />
           Valorant Skins
         </Link>
       </div>
