@@ -1,25 +1,41 @@
 'use client'
-import React from 'react'
-import {useSearchParams} from 'next/navigation' // Import useRouter
+import React, {useState, useEffect} from 'react'
+import {useRouter, useSearchParams} from 'next/navigation'
 import SkinCard, {SkinCardProps} from '../components/SkinCard'
+import Loader from '../components/Loader'
 
-const SkinPage = async () => {
-  const searchParams = useSearchParams() // Use useSearchParams
-  const search = searchParams.get('search') // Get search term from query parameters
+const SkinPage = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [skins, setSkins] = useState<SkinCardProps[]>([])
+  const [filteredSkins, setFilteredSkins] = useState<SkinCardProps[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const res = await fetch('https://valorant-api.com/v1/weapons/skins')
-  const res_json = await res.json()
-  const skins = res_json.data
+  useEffect(() => {
+    const fetchSkins = async () => {
+      setIsLoading(true)
+      const res = await fetch('https://valorant-api.com/v1/weapons/skins')
+      const res_json = await res.json()
+      setSkins(res_json.data)
+      setIsLoading(false)
+    }
+    fetchSkins()
+  }, [])
 
-  // Filter skins based on the search term
-  const filteredSkins = search
-    ? skins.filter((skin: SkinCardProps) => skin.displayName.toLowerCase().includes((search as string).toLowerCase()))
-    : skins
+  useEffect(() => {
+    const search = searchParams.get('search')
+    const filtered = search
+      ? skins.filter((skin: SkinCardProps) => skin.displayName.toLowerCase().includes(search.toLowerCase()))
+      : skins
+    setFilteredSkins(filtered)
+  }, [searchParams, skins])
 
   return (
     <main>
       <div className="flex flex-wrap gap-4 justify-center mt-10">
-        {filteredSkins.length ? ( // Check if there are filtered skins
+        {isLoading ? (
+          <Loader />
+        ) : filteredSkins.length ? (
           filteredSkins.map(
             (skin: SkinCardProps) =>
               !skin.displayName.includes('Standard') &&

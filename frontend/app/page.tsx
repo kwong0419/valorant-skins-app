@@ -1,8 +1,5 @@
 import Link from 'next/link'
 import HeroImage from '../public/images/valorant_hero.gif'
-// import BackgroundImage from '../public/images/valorant-background.jpg'
-// import stockImage from '../public/images/valorant-gun-stock-image.webp'
-// import Navbar from './components/navbar'
 import Image from 'next/image'
 import LatestCard from './components/LatestCard'
 
@@ -16,7 +13,10 @@ export default function Home() {
           <Image alt="valorant hero page" src={HeroImage} className=" rounded-lg shadow-2xl" />
           <div>
             <h2 className="text-l font-bold py-6">Search the latest skins</h2>
-            <Link href="/skins" className="btn btn-primary">
+            <Link
+              href="/skins"
+              className="btn bg-customRed text-white hover:bg-white hover:text-black transition-colors duration-300"
+            >
               View all Skins
             </Link>
           </div>

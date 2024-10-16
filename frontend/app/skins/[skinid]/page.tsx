@@ -1,11 +1,13 @@
 'use client'
 
 import React, {useRef, useEffect, useState} from 'react'
-import {notFound} from 'next/navigation'
+import {useRouter} from 'next/navigation'
 import Image from 'next/image'
 import UnavailableImage from '@/app/components/Unavailable'
+import Loader from '@/app/components/Loader'
 
 function SkinItem({params}: {params: {skinId: string}}) {
+  const router = useRouter()
   const modalRef = useRef<HTMLDialogElement>(null)
   const [skinItemData, setSkinItemData] = useState<any>(null)
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
@@ -28,7 +30,7 @@ function SkinItem({params}: {params: {skinId: string}}) {
     fetchSkinData()
   }, [params.skinId])
 
-  if (!skinItemData) return <div>Loading...</div>
+  if (!skinItemData) return <Loader />
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -51,7 +53,10 @@ function SkinItem({params}: {params: {skinId: string}}) {
         <h2 className="card-title text-center mt-40">{skinItemData.displayName}</h2>
         <p className="text-center">Price goes here</p>
         <div className="card-actions justify-center mt-4">
-          <button className="btn btn-primary" onClick={openModal}>
+          <button
+            className="btn bg-customRed text-white hover:bg-white hover:text-black transition-colors"
+            onClick={openModal}
+          >
             Skin Details
           </button>
         </div>
@@ -132,11 +137,19 @@ function SkinItem({params}: {params: {skinId: string}}) {
           )}
           <div className="modal-action flex justify-center">
             <form method="dialog">
-              <button className="btn">Close</button>
+              <button className="btn bg-base-300 hover:bg-customDarkerRed hover:text-white transition-colors">
+                Close
+              </button>
             </form>
           </div>
         </div>
       </dialog>
+      <button
+        className="btn bg-black text-white hover:bg-white hover:text-black transition-colors"
+        onClick={() => router.back()}
+      >
+        Go Back
+      </button>
     </div>
   )
 }

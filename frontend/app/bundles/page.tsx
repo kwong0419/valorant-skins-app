@@ -1,37 +1,48 @@
 'use client'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSearchParams} from 'next/navigation'
-// import BundleCard, {BundleCardProps} from '../components/BundleCard'
+import BundleCard, {BundleCardProps} from '../components/BundleCard'
+import Loader from '../components/Loader'
 
-const BundlePage = async () => {
+const BundlePage = () => {
   const searchParams = useSearchParams()
-  const search = searchParams.get('search')
+  const [bundles, setBundles] = useState<BundleCardProps[]>([])
+  const [filteredBundles, setFilteredBundles] = useState<BundleCardProps[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const res = await fetch('https://valorant-api.com/v1/bundles')
-  const res_json = await res.json()
-  const bundles = res_json.data
+  useEffect(() => {
+    const fetchBundles = async () => {
+      setIsLoading(true)
+      const res = await fetch('https://valorant-api.com/v1/bundles')
+      const res_json = await res.json()
+      setBundles(res_json.data)
+      setIsLoading(false)
+    }
+    fetchBundles()
+  }, [])
 
-  // Filter bundles based on the search term
-  const filteredBundles = search
-    ? bundles.filter((bundle: any) => bundle.displayName.toLowerCase().includes((search as string).toLowerCase()))
-    : bundles
+  useEffect(() => {
+    const search = searchParams.get('search')
+    const filtered = search
+      ? bundles.filter((bundle: BundleCardProps) => bundle.displayName.toLowerCase().includes(search.toLowerCase()))
+      : bundles
+    setFilteredBundles(filtered)
+  }, [searchParams, bundles])
 
   return (
     <main>
-      <div className="flex flex-wrap gap-4 justify-center mt-10">
-        {filteredBundles.length ? (
-          filteredBundles.map((bundle: any) => (
-            <div className="hover:scale-105 hover:opacity-50" key={bundle.uuid}>
-              <h1>{bundle.displayName}</h1>
-              <img src={bundle.displayIcon} />
-              {/* <BundleCard
-                key={bundle.uuid}
-                uuid={bundle.uuid}
-                displayName={bundle.displayName}
-                displayIcon={bundle.displayIcon}
-                description={bundle.description}
-              /> */}
-            </div>
+      <div className="flex flex-wrap gap-6 justify-center mt-10">
+        {isLoading ? (
+          <Loader />
+        ) : filteredBundles.length ? (
+          filteredBundles.map((bundle: BundleCardProps) => (
+            <BundleCard
+              key={bundle.uuid}
+              uuid={bundle.uuid}
+              displayName={bundle.displayName}
+              displayIcon={bundle.displayIcon}
+              description={bundle.description}
+            />
           ))
         ) : (
           <p>No search results found. Try searching for a different bundle.</p>
