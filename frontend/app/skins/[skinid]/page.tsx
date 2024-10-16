@@ -11,6 +11,8 @@ function SkinItem({params}: {params: {skinId: string}}) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
   const [videoClicked, setVideoClicked] = useState(false)
 
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   const openModal = () => {
     if (modalRef.current) {
       modalRef.current.showModal()
@@ -99,10 +101,17 @@ function SkinItem({params}: {params: {skinId: string}}) {
                     onClick={() => {
                       if (level.streamedVideo) {
                         setSelectedVideo(level.streamedVideo)
+                        setVideoClicked(true)
+                        // Add a small delay to ensure the video element is rendered
+                        setTimeout(() => {
+                          if (videoRef.current) {
+                            videoRef.current.play()
+                          }
+                        }, 100)
                       } else {
                         setSelectedVideo(null)
+                        setVideoClicked(true)
                       }
-                      setVideoClicked(true)
                     }}
                   >
                     {index + 1}
@@ -110,12 +119,12 @@ function SkinItem({params}: {params: {skinId: string}}) {
                 ))}
               </div>
               {selectedVideo ? (
-                <video key={selectedVideo} controls className="mt-4">
+                <video key={selectedVideo} ref={videoRef} controls className="mt-4" autoPlay>
                   <source src={selectedVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                videoClicked && <p>Video is currently unavailable.</p> // Message if video is not available and button was clicked
+                videoClicked && <p>Video is currently unavailable.</p>
               )}
             </div>
           ) : (
