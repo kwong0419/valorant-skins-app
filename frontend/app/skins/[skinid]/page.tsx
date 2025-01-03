@@ -12,6 +12,7 @@ function SkinItem({params}: {params: {skinId: string}}) {
   const [skinItemData, setSkinItemData] = useState<any>(null)
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
   const [videoClicked, setVideoClicked] = useState(false)
+  const [activeLevel, setActiveLevel] = useState<string | null>(null)
 
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -102,8 +103,13 @@ function SkinItem({params}: {params: {skinId: string}}) {
                 {skinItemData.levels.map((level: any, index: number) => (
                   <button
                     key={level.uuid}
-                    className="btn btn-primary m-1"
+                    className={`btn m-1 ${
+                      activeLevel === level.uuid
+                        ? 'bg-customRed text-white'
+                        : 'bg-black text-white hover:bg-white hover:text-black'
+                    }`}
                     onClick={() => {
+                      setActiveLevel(level.uuid)
                       if (level.streamedVideo) {
                         setSelectedVideo(level.streamedVideo)
                         setVideoClicked(true)
