@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import HeroImage from '../public/images/valorant_hero.gif'
 import Image from 'next/image'
-import LatestCard from './components/LatestCard'
+import FeaturedBundle from './components/FeaturedBundle'
 
 export default function Home() {
   const array = ['1', '2', '3', '4']
@@ -29,15 +29,15 @@ export default function Home() {
           backgroundColor: '#DE1138',
         }}
       >
-        {/* <div className="hero-overlay"></div> */}
         <div className="hero-content text-neutral-content text-center">
-          <div>
-            <h1 className="mb-5 text-5xl font-bold color">Featured Bundle</h1>
-            <div className="flex flex-wrap justify-center ">
-              {array.map((index) => {
-                return <LatestCard key={index} index={index} />
-              })}
-            </div>
+          {/* featured bundle section */}
+          <div
+            className="hero min-h-2 w-full py-12 flex flex-wrap justify-center"
+            style={{
+              backgroundColor: '#DE1138',
+            }}
+          >
+            <FeaturedBundle />
           </div>
         </div>
       </div>

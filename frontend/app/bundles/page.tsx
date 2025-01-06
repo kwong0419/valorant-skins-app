@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {useSearchParams} from 'next/navigation'
 import BundleCard, {BundleCardProps} from '../components/BundleCard'
 import Loader from '../components/Loader'
+import FeaturedBundle from '../components/FeaturedBundle'
 
 const BundlePage = () => {
   const searchParams = useSearchParams()
@@ -30,8 +31,9 @@ const BundlePage = () => {
   }, [searchParams, bundles])
 
   return (
-    <main>
-      <div className="flex flex-wrap gap-6 justify-center mt-10">
+    <main className="container mx-auto px-4 py-8">
+      <FeaturedBundle />
+      <div className="flex flex-wrap gap-6 justify-center mt-16">
         {isLoading ? (
           <Loader />
         ) : filteredBundles.length ? (
