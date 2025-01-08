@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {useRouter, useSearchParams} from 'next/navigation'
 import SkinCard, {SkinCardProps} from '../components/SkinCard'
 import Loader from '../components/Loader'
+import WeaponFilters from '../components/WeaponFilters'
 
 const SkinPage = () => {
   const router = useRouter()
@@ -32,6 +33,7 @@ const SkinPage = () => {
 
   return (
     <main>
+      <WeaponFilters />
       <div className="flex flex-wrap gap-4 justify-center mt-10">
         {isLoading ? (
           <Loader />
