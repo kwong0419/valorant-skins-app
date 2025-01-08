@@ -60,7 +60,14 @@ export default function FeaturedBundle() {
     fetchBundleData()
   }, [])
 
-  if (loading) return <Loader />
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen fixed top-0 left-0 z-50 bg-black">
+        <Loader />
+      </div>
+    )
+  }
+
   if (!bundleData) return null
 
   return (

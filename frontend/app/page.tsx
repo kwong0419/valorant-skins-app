@@ -4,7 +4,6 @@ import Image from 'next/image'
 import FeaturedBundle from './components/FeaturedBundle'
 
 export default function Home() {
-  const array = ['1', '2', '3', '4']
   return (
     <main className="flex min-h-screen flex-col items-center">
       {/* hero section */}
