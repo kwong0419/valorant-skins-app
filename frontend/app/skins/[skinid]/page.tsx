@@ -52,7 +52,8 @@ function SkinItem({params}: {params: {skinId: string}}) {
           </div>
         )}
         <h2 className="card-title text-center mt-40">{skinItemData.displayName}</h2>
-        <p className="text-center">Price goes here</p>
+        {/* TODO: add price */}
+        {/* <p className="text-center">Price goes here</p> */}
         <div className="card-actions justify-center mt-4">
           <button
             className="btn bg-customRed text-white hover:bg-white hover:text-black transition-colors"

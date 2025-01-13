@@ -24,7 +24,8 @@ const BundleCard: React.FC<BundleCardProps> = ({uuid, displayName, displayIcon, 
         </div>
         <div className="p-4 flex-grow">
           <h2 className="text-xl font-bold text-white mb-2 truncate">{displayName}</h2>
-          <p className="text-gray-300 text-sm line-clamp-2">Price: Price goes here</p>
+          {/* TODO: add price */}
+          {/* <p className="text-gray-300 text-sm line-clamp-2">Price: Price goes here</p> */}
         </div>
       </div>
     </Link>
