@@ -1,11 +1,11 @@
 'use client'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Suspense} from 'react'
 import {useSearchParams} from 'next/navigation'
 import BundleCard, {BundleCardProps} from '../components/BundleCard'
 import Loader from '../components/Loader'
 import FeaturedBundle from '../components/FeaturedBundle'
 
-const BundlePage = () => {
+function BundlePageContent() {
   const searchParams = useSearchParams()
   const [bundles, setBundles] = useState<BundleCardProps[]>([])
   const [filteredBundles, setFilteredBundles] = useState<BundleCardProps[]>([])
@@ -51,6 +51,14 @@ const BundlePage = () => {
         )}
       </div>
     </main>
+  )
+}
+
+const BundlePage = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <BundlePageContent />
+    </Suspense>
   )
 }
 

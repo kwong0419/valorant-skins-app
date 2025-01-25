@@ -1,11 +1,11 @@
 'use client'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Suspense} from 'react'
 import {useRouter, useSearchParams} from 'next/navigation'
 import SkinCard, {SkinCardProps} from '../components/SkinCard'
 import Loader from '../components/Loader'
 import WeaponFilters from '../components/WeaponFilters'
 
-const SkinPage = () => {
+function SkinPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [skins, setSkins] = useState<SkinCardProps[]>([])
@@ -57,6 +57,14 @@ const SkinPage = () => {
         )}
       </div>
     </main>
+  )
+}
+
+const SkinPage = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <SkinPageContent />
+    </Suspense>
   )
 }
 
