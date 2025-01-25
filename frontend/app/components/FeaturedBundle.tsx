@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Loader from './Loader'
-import {HENRIKDEV_API_KEY} from '../config/secrets'
 
 interface BundleItem {
   uuid: string
@@ -32,7 +31,7 @@ export default function FeaturedBundle() {
     const fetchBundleData = async () => {
       try {
         const [featuredRes, bundleInfoRes] = await Promise.all([
-          fetch(`https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${HENRIKDEV_API_KEY}`),
+          fetch(`https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${process.env.HENRIKDEV_API_KEY}`),
           fetch('https://valorant-api.com/v1/bundles'),
         ])
 
