@@ -1,18 +1,20 @@
 'use client'
 
 import React, {useRef, useEffect, useState} from 'react'
-import {useRouter} from 'next/navigation'
-import Image from 'next/image'
+import {useRouter, usePathname} from 'next/navigation'
 import UnavailableImage from '@/app/components/Unavailable'
 import Loader from '@/app/components/Loader'
 
 function SkinItem({params}: {params: {skinId: string}}) {
   const router = useRouter()
+  const pathname = usePathname()
   const modalRef = useRef<HTMLDialogElement>(null)
   const [skinItemData, setSkinItemData] = useState<any>(null)
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
   const [videoClicked, setVideoClicked] = useState(false)
   const [activeLevel, setActiveLevel] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -23,15 +25,39 @@ function SkinItem({params}: {params: {skinId: string}}) {
   }
 
   useEffect(() => {
-    const fetchSkinData = async () => {
-      const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${params.skinId}`)
-      const res_json = await res.json()
-      setSkinItemData(res_json.data)
-    }
-    fetchSkinData()
-  }, [params.skinId])
+    // Extract skinId from pathname as a fallback
+    const skinIdFromPath = pathname.split('/').pop()
+    const currentSkinId = params.skinId || skinIdFromPath
 
-  if (!skinItemData) return <Loader />
+    const fetchSkinData = async () => {
+      setIsLoading(true)
+      try {
+        if (!currentSkinId) {
+          setError('Invalid skin ID')
+          return
+        }
+
+        const res = await fetch(`https://valorant-api.com/v1/weapons/skins/${currentSkinId}`)
+        if (!res.ok) {
+          throw new Error('Failed to fetch skin data')
+        }
+        const res_json = await res.json()
+        if (!res_json.data) {
+          throw new Error('No skin data found')
+        }
+        setSkinItemData(res_json.data)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred')
+        console.error('Error fetching skin data:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchSkinData()
+  }, [params.skinId, pathname])
+
+  if (isLoading) return <Loader />
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
