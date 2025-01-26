@@ -7,6 +7,7 @@ applications:
             - npm ci
         build:
           commands:
+            - echo "HENRIKDEV_API_KEY=$HENRIKDEV_API_KEY" >> .env.local
             - npm run build
       artifacts:
         baseDirectory: .next

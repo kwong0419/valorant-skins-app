@@ -33,29 +33,35 @@ function SkinPageContent() {
 
   return (
     <main>
-      <WeaponFilters />
-      <div className="flex flex-wrap gap-4 justify-center mt-10">
-        {isLoading ? (
+      {isLoading ? (
+        <div className="w-full min-h-screen fixed top-0 left-0 z-50 bg-black">
           <Loader />
-        ) : filteredSkins.length ? (
-          filteredSkins.map(
-            (skin: SkinCardProps) =>
-              !skin.displayName.includes('Standard') &&
-              !skin.displayName.includes('Random Favorite') && (
-                <div className="hover:scale-105 hover:opacity-50" key={skin.uuid}>
-                  <SkinCard
-                    key={skin.uuid}
-                    uuid={skin.uuid}
-                    displayName={skin.displayName}
-                    displayIcon={skin.displayIcon}
-                  />
-                </div>
-              ),
-          )
-        ) : (
-          <p>No search results found. Try searching for a different skin.</p>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          <WeaponFilters />
+          <div className="flex flex-wrap gap-4 justify-center mt-10">
+            {filteredSkins.length ? (
+              filteredSkins.map(
+                (skin: SkinCardProps) =>
+                  skin?.uuid &&
+                  !skin.displayName.includes('Standard') &&
+                  !skin.displayName.includes('Random Favorite') && (
+                    <div className="hover:scale-105 hover:opacity-50" key={skin.uuid}>
+                      <SkinCard
+                        uuid={skin.uuid}
+                        displayName={skin.displayName || 'Unknown'}
+                        displayIcon={skin.displayIcon || ''}
+                      />
+                    </div>
+                  ),
+              )
+            ) : (
+              <p>No search results found. Try searching for a different skin.</p>
+            )}
+          </div>
+        </>
+      )}
     </main>
   )
 }

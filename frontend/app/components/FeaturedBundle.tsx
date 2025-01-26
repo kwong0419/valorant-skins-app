@@ -1,7 +1,6 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import Loader from './Loader'
 
@@ -30,10 +29,20 @@ export default function FeaturedBundle() {
   useEffect(() => {
     const fetchBundleData = async () => {
       try {
+        const apiKey = process.env.HENRIKDEV_API_KEY
+        if (!apiKey) {
+          console.error('API key is not defined')
+          return
+        }
+
         const [featuredRes, bundleInfoRes] = await Promise.all([
-          fetch(`https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${process.env.HENRIKDEV_API_KEY}`),
+          fetch(`https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${apiKey}`),
           fetch('https://valorant-api.com/v1/bundles'),
         ])
+
+        if (!featuredRes.ok) {
+          throw new Error(`Featured API failed: ${featuredRes.status}`)
+        }
 
         const featuredData = await featuredRes.json()
         const bundleInfoData = await bundleInfoRes.json()
