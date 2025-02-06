@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -16,8 +17,6 @@ const nextConfig = {
         pathname: '**',
       },
     ],
-    domains: ['media.valorant-api.com'],
-    unoptimized: true,
   },
   env: {
     HENRIKDEV_API_KEY: process.env.HENRIKDEV_API_KEY,
