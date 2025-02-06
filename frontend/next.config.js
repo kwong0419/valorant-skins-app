@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -15,6 +16,8 @@ const nextConfig = {
         pathname: '**',
       },
     ],
+    domains: ['media.valorant-api.com'],
+    unoptimized: true,
   },
   env: {
     HENRIKDEV_API_KEY: process.env.HENRIKDEV_API_KEY,

@@ -1,0 +1,11 @@
+[build]
+  command = "cd frontend && npm install && npm run build"
+  publish = "frontend/.next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
