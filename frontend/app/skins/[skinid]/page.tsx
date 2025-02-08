@@ -24,6 +24,18 @@ function SkinItem({params}: {params: {skinId: string}}) {
     }
   }
 
+  const stopVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause()
+      videoRef.current.currentTime = 0
+    }
+  }
+
+  const closeModal = () => {
+    stopVideo()
+    modalRef.current?.close()
+  }
+
   useEffect(() => {
     // Extract skinId from pathname as a fallback
     const skinIdFromPath = pathname.split('/').pop()
@@ -90,13 +102,9 @@ function SkinItem({params}: {params: {skinId: string}}) {
         </div>
       </div>
 
-      <dialog id="skin-modal" className="modal" ref={modalRef} onClick={() => modalRef.current?.close()}>
+      <dialog id="skin-modal" className="modal" ref={modalRef} onClick={closeModal}>
         <div className="modal-box w-11/12 max-w-5xl relative" onClick={(e) => e.stopPropagation()}>
-          <button
-            className="btn btn-sm btn-circle absolute right-2 top-2"
-            onClick={() => modalRef.current?.close()}
-            aria-label="Close"
-          >
+          <button className="btn btn-sm btn-circle absolute right-2 top-2" onClick={closeModal} aria-label="Close">
             ✕
           </button>
           <h3 className="font-bold text-lg text-center">{skinItemData.displayName}</h3>
@@ -170,7 +178,10 @@ function SkinItem({params}: {params: {skinId: string}}) {
           )}
           <div className="modal-action flex justify-center">
             <form method="dialog">
-              <button className="btn bg-base-300 hover:bg-customDarkerRed hover:text-white transition-colors">
+              <button
+                className="btn bg-base-300 hover:bg-customDarkerRed hover:text-white transition-colors"
+                onClick={stopVideo}
+              >
                 Close
               </button>
             </form>
