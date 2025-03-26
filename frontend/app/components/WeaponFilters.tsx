@@ -86,6 +86,10 @@ const WeaponFilters = () => {
         const meleeWeapon = data.data[data.data.length - 1]
         if (meleeWeapon && meleeWeapon.skins) {
           setMeleeSkins(meleeWeapon.skins)
+          // Update URL without navigation
+          const url = new URL(window.location.href)
+          url.searchParams.set('search', 'Melee')
+          window.history.pushState({}, '', url)
         }
       } catch (error) {
         console.error('Error fetching melee weapons:', error)
