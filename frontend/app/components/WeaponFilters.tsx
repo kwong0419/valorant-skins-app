@@ -58,7 +58,7 @@ const WeaponFilters = () => {
         })
 
         // Remove duplicates and sort
-        const uniqueWeapons = Array.from(new Set(weaponNames)).sort()
+        const uniqueWeapons = Array.from(new Set(weaponNames)).sort() as string[]
         setWeapons(uniqueWeapons)
       } catch (error) {
         console.error('Error fetching weapons:', error)
