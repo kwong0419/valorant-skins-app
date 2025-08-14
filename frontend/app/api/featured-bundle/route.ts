@@ -12,10 +12,12 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await fetch(
-      `https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${apiKey}`,
+      'https://api.henrikdev.xyz/valorant/v1/store-featured',
       {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': apiKey,
+          'Accept': '*/*',
         },
       }
     )
