@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await fetch(
-      'https://api.henrikdev.xyz/valorant/v1/store-featured',
+      'https://api.henrikdev.xyz/valorant/v2/store-featured',
       {
         method: 'GET',
         headers: {
@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json()
+
     return NextResponse.json(data)
   } catch (error) {
     console.error('Error fetching featured bundle:', error)
