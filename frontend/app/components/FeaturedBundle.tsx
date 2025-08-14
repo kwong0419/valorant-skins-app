@@ -29,14 +29,8 @@ export default function FeaturedBundle() {
   useEffect(() => {
     const fetchBundleData = async () => {
       try {
-        const apiKey = process.env.HENRIKDEV_API_KEY
-        if (!apiKey) {
-          console.error('API key is not defined')
-          return
-        }
-
         const [featuredRes, bundleInfoRes] = await Promise.all([
-          fetch(`https://api.henrikdev.xyz/valorant/v2/store-featured?api_key=${apiKey}`),
+          fetch('/api/featured-bundle'),
           fetch('https://valorant-api.com/v1/bundles'),
         ])
 
