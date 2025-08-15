@@ -31,7 +31,7 @@ export default function Home() {
         <div className="hero-content text-neutral-content text-center">
           {/* featured bundle section */}
           <div
-            className="hero min-h-2 w-full py-12 flex flex-wrap justify-center"
+            className="hero min-h-2 w-full py-36 flex flex-wrap justify-center"
             style={{
               backgroundColor: '#DE1138',
             }}

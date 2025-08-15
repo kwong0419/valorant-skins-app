@@ -25,13 +25,14 @@ interface Bundle {
 export default function FeaturedBundle() {
   const [bundleData, setBundleData] = useState<Bundle | null>(null)
   const [loading, setLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
     const fetchBundleData = async () => {
       try {
         const [featuredRes, bundleInfoRes] = await Promise.all([
           fetch('/api/featured-bundle'),
-          fetch('https://valorant-api.com/v1/bundles'),
+          fetch('https://valorant-api.com/v1/bundles/'),
         ])
 
         if (!featuredRes.ok) {
@@ -41,19 +42,42 @@ export default function FeaturedBundle() {
         const featuredData = await featuredRes.json()
         const bundleInfoData = await bundleInfoRes.json()
 
+        // Check if we have valid data
+        if (!featuredData.data || featuredData.data.length === 0) {
+          console.log('No featured bundle data available')
+          setHasError(true)
+          return
+        }
+
         // Get the featured bundle
         const featured = featuredData.data[0]
+        
+        // Check if featured has required properties
+        if (!featured.bundle_uuid) {
+          console.log('Featured bundle missing bundle_uuid')
+          setHasError(true)
+          return
+        }
+
         // Find matching bundle info
         const bundleInfo = bundleInfoData.data.find((bundle: any) => bundle.uuid === featured.bundle_uuid)
+
+        // Check if we found matching bundle info
+        if (!bundleInfo) {
+          console.log('No matching bundle info found')
+          setHasError(true)
+          return
+        }
 
         // Combine the data
         setBundleData({
           ...featured,
-          displayName: bundleInfo?.displayName,
-          displayIcon: bundleInfo?.displayIcon,
+          displayName: bundleInfo.displayName,
+          displayIcon: bundleInfo.displayIcon,
         })
       } catch (error) {
         console.error('Error fetching bundle data:', error)
+        setHasError(true)
       } finally {
         setLoading(false)
       }
@@ -62,15 +86,15 @@ export default function FeaturedBundle() {
     fetchBundleData()
   }, [])
 
-  if (loading) {
-    return (
-      <div className="w-full min-h-screen fixed top-0 left-0 z-50 bg-black">
-        <Loader />
-      </div>
-    )
+  // Hide component if loading and no data yet
+  if (loading && !bundleData) {
+    return null
   }
 
-  if (!bundleData) return null
+  // Hide component if there's an error or no data
+  if (hasError || !bundleData) {
+    return null
+  }
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
